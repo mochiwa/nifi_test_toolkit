@@ -9,6 +9,7 @@ from src.test.domain.testcase.project_mother import project_mother_create
 from src.test.helper.arg_captor import ArgCaptor
 from src.test.infrastructure.rest.payload import create_testcase_payload
 
+
 project_repository = mock()
 service = CreateTestCaseService(project_repository=project_repository)
 
@@ -57,6 +58,7 @@ def test_should_raise_project_not_found_when_project_repository_not_found_projec
 
 
 def test_should_add_testcase_to_project_repository():
+    ff = project_repository
     project = project_mother_create()
     projectCaptor = ArgCaptor()
     request = CreateTestCaseRequest.from_json(create_testcase_payload())
@@ -69,6 +71,6 @@ def test_should_add_testcase_to_project_repository():
     verify(project_repository).get_project(request.project_id)
     verify(project_repository).save(projectCaptor)
 
-    project_save = projectCaptor.getValue()
-    assert project_save is not None
-    assert project_save.testcases[0].testcase_id == response.testcase_id
+    project_saved = projectCaptor.getValue()
+    assert project_saved is not None
+    assert project_saved.testcases[0].testcase_id == response.testcase_id

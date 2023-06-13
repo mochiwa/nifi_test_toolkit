@@ -5,9 +5,11 @@ class Project:
     _project_id: str
     _testcases: [TestCase]
 
-    def __init__(self, project_id: str):
+    def __init__(self, project_id: str, testcases: [TestCase] = None):
+        if testcases is None:
+            testcases = []
         self._project_id = project_id
-        self._testcases = []
+        self._testcases = testcases
 
     @property
     def project_id(self) -> str:

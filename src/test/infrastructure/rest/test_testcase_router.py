@@ -4,11 +4,12 @@ from starlette.testclient import TestClient
 from src.app.application.request.create_testcase_request import CreateTestCaseRequest
 from src.app.application.response.testcase_response import TestCaseResponse
 from src.app.infrastructure.rest import testcase_router
-from src.main import create_app
+from src.main import create_app, create_di
 from src.test.helper.arg_captor import ArgCaptor
 from src.test.infrastructure.rest.payload import create_testcase_payload
 
-app = create_app()
+di = create_di()
+app = create_app(di)
 client = TestClient(app)
 createTestCaseService = mock()
 
