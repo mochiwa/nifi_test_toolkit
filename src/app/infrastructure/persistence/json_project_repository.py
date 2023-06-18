@@ -6,6 +6,7 @@ from app.domain.project.project import Project
 from app.domain.project.project_repository import ProjectRepository
 
 ROOT_DIR_NAME = 'nttk'
+PROJECT_FILE_NAME = "project.json"
 
 
 class JsonProjectRepository(ProjectRepository):
@@ -19,7 +20,7 @@ class JsonProjectRepository(ProjectRepository):
         return project
 
     def get(self, project_id: str) -> Project:
-        path = os.path.join(self._root_dir, project_id, 'project.json')
+        path = os.path.join(self._root_dir, project_id, PROJECT_FILE_NAME)
         with open(path, 'r') as file:
             return json.loads(file.read(), object_hook=lambda x: SimpleNamespace(**x))
 
@@ -30,5 +31,5 @@ class JsonProjectRepository(ProjectRepository):
 
     def _merge(self, project: Project):
         path = self._create_directory(project.project_id)
-        with open(os.path.join(path, 'project.json'), 'w') as file:
+        with open(os.path.join(path, PROJECT_FILE_NAME), 'w') as file:
             file.write(json.dumps(project.__dict__))

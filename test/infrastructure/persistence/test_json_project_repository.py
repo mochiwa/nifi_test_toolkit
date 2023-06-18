@@ -20,7 +20,6 @@ def setup():
 def test_save_should_create_project_id_directory():
     repository.save(project)
 
-    assert os.path.exists(f"./{ROOT_DIR_NAME}/{project.project_id}")
     assert os.path.isdir(f"./{ROOT_DIR_NAME}/{project.project_id}")
 
 

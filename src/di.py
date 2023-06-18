@@ -7,9 +7,7 @@ from app.infrastructure.persistence.json_project_repository import JsonProjectRe
 class DI(containers.DeclarativeContainer):
     config = providers.Configuration()
     wiring_config = containers.WiringConfiguration(modules=["app.infrastructure.rest.projects_router"])
-    project_repository = providers.Factory(
-        JsonProjectRepository,
-    )
+    project_repository = providers.Factory(JsonProjectRepository)
 
     project_service = providers.Factory(
         ProjectService,
