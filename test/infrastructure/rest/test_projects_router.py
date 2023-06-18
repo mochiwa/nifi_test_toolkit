@@ -20,6 +20,6 @@ def test_post_projects_should_call_project_service():
 
     assert output.status_code == 201
     assert output.headers['Location'] == f"/projects/{response.project_id}"
-    assert output.json() == {}
+    assert output.json() is None
 
     verify(projectService).create({})

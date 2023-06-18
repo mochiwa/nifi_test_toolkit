@@ -15,8 +15,6 @@ router = APIRouter(
 def create_project(
         payload: dict,
         response: Response,
-        service: ProjectService = Depends(Provide[DI.project_service])) -> dict:
-
+        service: ProjectService = Depends(Provide[DI.project_service])):
     project = service.create(payload)
     response.headers['Location'] = f"{router.prefix}/{project.project_id}"
-    return {}

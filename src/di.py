@@ -1,20 +1,17 @@
 from dependency_injector import containers, providers
 
 from app.application.service.project_service import ProjectService
+from app.infrastructure.persistence.json_project_repository import JsonProjectRepository
 
 
 class DI(containers.DeclarativeContainer):
     config = providers.Configuration()
     wiring_config = containers.WiringConfiguration(modules=["app.infrastructure.rest.projects_router"])
-    project_service = providers.Factory(
-        ProjectService
+    project_repository = providers.Factory(
+        JsonProjectRepository,
     )
 
-    # db = providers.Singleton(Database, url=config.db.url)
-    #
-    # project_repository = providers.Factory(
-    #     SQlProjectRepository,
-    #     session_factory=db.provided.session
-    # )
-
-
+    project_service = providers.Factory(
+        ProjectService,
+        project_repository
+    )

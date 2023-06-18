@@ -14,6 +14,7 @@ class TestCreateProjectIntegrationTest(AbstractIntegration):
 
     def test_should_save_new_project_in_repository(self):
         response = self.client.post('/projects', json={})
-        saved = self.project_repository.get(response.json().project_id)
+        id_created = response.headers.get('Location').split("/projects/")[-1]
+        saved = self.project_repository.get(id_created)
 
         assert saved is not None
