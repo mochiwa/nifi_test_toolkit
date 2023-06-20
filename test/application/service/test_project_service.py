@@ -5,9 +5,11 @@ import pytest
 from mockito import mock, when, ANY, verify
 
 from app.application.service.project_service import ProjectService
+from application.request.create_project_request_mother import CreateProjectRequestMother
 from helper.arg_captor import ArgCaptor
 from helper.const import REGEX_UUID
 
+request = CreateProjectRequestMother.create()
 project_repository = mock()
 service = ProjectService(project_repository)
 
@@ -20,7 +22,7 @@ def setup():
 
 def test_create_project_should_return_project_with_id():
     when(project_repository).save(ANY).thenAnswer(lambda x: x)
-    project = service.create({})
+    project = service.create(request)
 
     assert re.match(REGEX_UUID, project.project_id)
 
@@ -32,7 +34,7 @@ def test_create_project_should_insert_new_project_in_repository():
 
     when(project_repository).save(ANY).thenAnswer(lambda x: x)
 
-    project = service.create({})
+    project = service.create(request)
 
     verify(project_repository).save(project_to_save_captor)
     project_saved = project_to_save_captor.value

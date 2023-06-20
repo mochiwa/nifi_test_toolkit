@@ -6,9 +6,10 @@ import pytest
 
 from app.domain.project.project import Project
 from app.infrastructure.persistence.json_project_repository import JsonProjectRepository, ROOT_DIR_NAME
+from domain.project_mother import ProjectMother
 
 repository = JsonProjectRepository()
-project = Project(project_id=str(uuid.uuid4()))
+project = ProjectMother.create()
 
 
 @pytest.fixture(autouse=True)
