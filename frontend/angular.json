@@ -89,7 +89,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "include": [
+              "../test/app/**/**.spec.ts"
+            ]
           }
         }
       }
