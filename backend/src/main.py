@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 
 from app.infrastructure.rest.exception_handler import add_exception_handler
@@ -18,4 +19,5 @@ def create_app(di: DI):
 
 
 if __name__ == '__main__':
-    create_app(create_di())
+    app = create_app(create_di())
+    uvicorn.run(app)
