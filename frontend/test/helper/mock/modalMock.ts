@@ -4,6 +4,6 @@ export class MatDialogMock {
 
   }
 
-  public close(){
+  public close() {
   }
 }

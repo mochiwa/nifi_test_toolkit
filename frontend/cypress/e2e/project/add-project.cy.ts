@@ -31,15 +31,15 @@ describe('add a project', () => {
         cy.get('input[name="password"]').type("password");
       });
 
-      cy.intercept('POST','**/projects',{
-         statusCode: 201,
-         body:{},
-       }).as("POST");
+      cy.intercept('POST', '**/projects', {
+        statusCode: 201,
+        body: {},
+      }).as("POST");
     });
     it('should close form when submit it', () => {
       cy.get(addProjectForm).contains('Submit').should('be.enabled').click();
 
-      cy.wait('@POST').then(({request})=>{
+      cy.wait('@POST').then(({request}) => {
         expect(request.body.project_name).to.eq('the project name');
         expect(request.body.project_uri).to.eq('http://localhost');
         expect(request.body.authentication).to.eq(true);
@@ -63,7 +63,7 @@ describe('add a project', () => {
         cy.get('input[name="password"]').should('be.disabled');
       })
       cy.get(addProjectForm).contains('Submit').should('be.enabled').click();
-      cy.wait('@POST').then(({request})=>{
+      cy.wait('@POST').then(({request}) => {
         expect(request.body.project_name).to.eq('the project name');
         expect(request.body.project_uri).to.eq('http://localhost');
         expect(request.body.authentication).to.eq(false);

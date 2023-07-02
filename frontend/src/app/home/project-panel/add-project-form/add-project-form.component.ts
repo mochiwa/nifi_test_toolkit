@@ -43,11 +43,6 @@ export class AddProjectFormComponent implements OnInit {
     });
   }
 
-  private toggleField(field: FormControl) {
-    field.disabled ? field.enable() : field.disable();
-    field.setValue('');
-  }
-
   cancel() {
     this.dialogRef.close();
   }
@@ -58,5 +53,10 @@ export class AddProjectFormComponent implements OnInit {
         next: (v) => this.cancel(),
         error: (e: HttpErrorResponse) => console.log("hello world")
       });
+  }
+
+  private toggleField(field: FormControl) {
+    field.disabled ? field.enable() : field.disable();
+    field.setValue('');
   }
 }
