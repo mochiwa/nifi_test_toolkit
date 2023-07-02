@@ -5,5 +5,5 @@ import {provideHttpClient} from "@angular/common/http";
 
 
 bootstrapApplication(AppComponent, {
-  providers: [provideAnimations(), provideHttpClient()]
+  providers: [provideAnimations(), provideHttpClient(), provideAnimations()]
 })
