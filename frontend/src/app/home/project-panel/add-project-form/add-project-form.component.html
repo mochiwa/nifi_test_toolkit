@@ -1,0 +1,56 @@
+<div [attr.data-tst]="'add_project-form'">
+  <h1 mat-dialog-title>Add new project</h1>
+  <div mat-dialog-content>
+    <form
+      [attr.data-tst]="'add-project'"
+      [formGroup]="projectForm">
+      <mat-form-field>
+        <mat-label>Project name</mat-label>
+        <input
+          [name]="'project_name'"
+          formControlName="project_name"
+          matInput>
+        <mat-error *ngIf="projectForm.controls.project_name.invalid">Project name is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Project uri</mat-label>
+        <input
+          [name]="'project_uri'"
+          formControlName="project_uri"
+          matInput>
+      </mat-form-field>
+      <mat-checkbox
+        [name]="'authentication'"
+        formControlName="authentication">Authentication
+      </mat-checkbox>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input
+          [name]="'username'"
+          formControlName="username"
+          matInput>
+        <mat-error *ngIf="projectForm.controls.username.invalid">Username is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          [name]="'password'"
+          formControlName="password"
+          matInput>
+        <mat-error *ngIf="projectForm.controls.password.invalid">Password is required.</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div align="end" mat-dialog-actions>
+    <button
+      (click)="cancel()"
+      mat-button
+      mat-dialog-close>Cancel
+    </button>
+    <button
+      (click)="submit()"
+      [disabled]="projectForm.invalid"
+      mat-button>Submit
+    </button>
+  </div>
+</div>
