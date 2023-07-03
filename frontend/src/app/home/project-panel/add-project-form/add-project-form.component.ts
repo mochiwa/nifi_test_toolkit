@@ -7,6 +7,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgIf} from "@angular/common";
+import {Project} from "../../../core/model/Project";
 
 @Component({
   standalone: true,
@@ -37,7 +38,7 @@ export class AddProjectFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.projectForm.controls.authentication.valueChanges.subscribe(value => {
+    this.projectForm.controls.authentication.valueChanges.subscribe(() => {
       this.toggleField(this.projectForm.controls.username);
       this.toggleField(this.projectForm.controls.password);
     });
@@ -48,10 +49,11 @@ export class AddProjectFormComponent implements OnInit {
   }
 
   submit() {
-    this.backendService.addProject(this.projectForm.value)
+    let payload: Project = Object.assign(this.projectForm.value)
+    this.backendService.addProject(payload)
       .subscribe({
-        next: (v) => this.cancel(),
-        error: (e: HttpErrorResponse) => console.log("hello world")
+        next: () => this.cancel(),
+        error: (e: HttpErrorResponse) => console.error(e)
       });
   }
 
