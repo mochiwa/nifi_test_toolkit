@@ -21,6 +21,15 @@ class JsonProjectRepository(ProjectRepository):
 
     def get(self, project_id: str) -> Project:
         path = os.path.join(self._root_dir, project_id, PROJECT_FILE_NAME)
+        return self._file_to_model(path)
+
+    def get_all(self) -> [Project]:
+        data = []
+        for project_id in os.listdir(self._root_dir):
+            data.append(self.get(project_id))
+        return data
+
+    def _file_to_model(self, path: str) -> Project:
         with open(path, 'r') as file:
             return json.loads(file.read(), object_hook=lambda x: SimpleNamespace(**x))
 

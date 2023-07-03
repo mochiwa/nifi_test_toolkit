@@ -21,4 +21,4 @@ class ProjectService:
         return self.project_repository.save(project)
 
     def get_all(self) -> [Project]:
-        return []
+        return self.project_repository.get_all()

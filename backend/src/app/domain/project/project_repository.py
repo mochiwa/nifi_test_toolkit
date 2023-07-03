@@ -6,4 +6,7 @@ class ProjectRepository:
         raise NotImplemented()
 
     def get(self, project_id: str) -> Project:
-        raise NotImplemented
+        raise NotImplemented()
+
+    def get_all(self) -> [Project]:
+        raise NotImplemented()
