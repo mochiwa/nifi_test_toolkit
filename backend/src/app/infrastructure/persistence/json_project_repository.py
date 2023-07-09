@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 from types import SimpleNamespace
 
 from app.domain.project.project import Project
@@ -28,6 +29,11 @@ class JsonProjectRepository(ProjectRepository):
         for project_id in os.listdir(self._root_dir):
             data.append(self.get(project_id))
         return data
+
+    def delete_project(self, project_id: str):
+        project_path = f"{self._root_dir}/{project_id}"
+        if os.path.exists(project_path):
+            shutil.rmtree(project_path)
 
     def _file_to_model(self, path: str) -> Project:
         with open(path, 'r') as file:

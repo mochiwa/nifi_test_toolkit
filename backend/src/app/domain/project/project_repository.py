@@ -10,3 +10,6 @@ class ProjectRepository:
 
     def get_all(self) -> [Project]:
         raise NotImplemented()
+
+    def delete_project(self, project_id: str):
+        raise NotImplemented()

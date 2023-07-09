@@ -1,6 +1,7 @@
 import uuid
 
 from app.application.request.create_project_request import CreateProjectRequest
+from app.application.request.delete_project_request import DeleteProjectRequest
 from app.domain.project.project import Project
 from app.domain.project.project_repository import ProjectRepository
 
@@ -22,3 +23,6 @@ class ProjectService:
 
     def get_all(self) -> [Project]:
         return self.project_repository.get_all()
+
+    def delete_project(self, request: DeleteProjectRequest):
+        self.project_repository.delete_project(request.project_id)

@@ -1,6 +1,9 @@
+import uuid
+
 from mockito import mock, when, ANY, verify
 from starlette.testclient import TestClient
 
+from app.application.request.delete_project_request import DeleteProjectRequest
 from app.infrastructure.rest import projects_router
 from domain.project_mother import ProjectMother
 from src.main import create_di, create_app
@@ -30,6 +33,17 @@ def test_post_projects_should_call_project_service():
 def test_get_projects_should_call_project_service():
     with app.di.project_service.override(projectService):
         when(projectService).get_all().thenReturn([])
-        output = client.get(projects_router.prefix)
+        client.get(projects_router.prefix)
 
     verify(projectService).get_all()
+
+
+def test_delete_project_should_call_project_service_delete_project():
+    id = str(uuid.uuid4())
+    expected_request = DeleteProjectRequest(id)
+
+    with app.di.project_service.override(projectService):
+        when(projectService).delete_project(any).thenReturn(None)
+        client.delete(projects_router.prefix + "/" + id)
+
+    verify(projectService).delete_project(expected_request)
