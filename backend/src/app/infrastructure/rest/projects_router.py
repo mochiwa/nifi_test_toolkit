@@ -20,3 +20,9 @@ def create_project(
     request = CreateProjectRequest.create(payload)
     project = service.create(request)
     response.headers['Location'] = f"{router.prefix}/{project.project_id}"
+
+
+@router.get("/")
+@inject
+def get_all(service: ProjectService = Depends(Provide[DI.project_service])):
+    return service.get_all()

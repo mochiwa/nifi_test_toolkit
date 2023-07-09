@@ -1,7 +1,6 @@
 from mockito import mock, when, ANY, verify
 from starlette.testclient import TestClient
 
-from app.domain.project.project import Project
 from app.infrastructure.rest import projects_router
 from domain.project_mother import ProjectMother
 from src.main import create_di, create_app
@@ -26,3 +25,11 @@ def test_post_projects_should_call_project_service():
     assert output.json() is None
 
     verify(projectService).create(ANY())
+
+
+def test_get_projects_should_call_project_service():
+    with app.di.project_service.override(projectService):
+        when(projectService).get_all().thenReturn([])
+        output = client.get(projects_router.prefix)
+
+    verify(projectService).get_all()

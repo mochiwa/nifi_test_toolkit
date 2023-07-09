@@ -6,6 +6,7 @@ from mockito import mock, when, ANY, verify
 
 from app.application.service.project_service import ProjectService
 from application.request.create_project_request_mother import CreateProjectRequestMother
+from domain.project_mother import ProjectMother
 from helper.arg_captor import ArgCaptor
 from helper.const import REGEX_UUID
 
@@ -41,3 +42,14 @@ def test_create_project_should_insert_new_project_in_repository():
 
     assert project_saved.project_id is not None
     assert project_saved.project_id == project.project_id
+
+
+def test_get_all_should_return_all_projects_from_repository():
+    project = ProjectMother.create()
+
+    when(project_repository).get_all().thenReturn([project])
+
+    output = service.get_all()
+
+    assert len(output) == 1
+    assert output[0].project_id == project.project_id

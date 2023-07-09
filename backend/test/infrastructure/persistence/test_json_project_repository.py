@@ -1,10 +1,8 @@
 import os
 import shutil
-import uuid
 
 import pytest
 
-from app.domain.project.project import Project
 from app.infrastructure.persistence.json_project_repository import JsonProjectRepository, ROOT_DIR_NAME
 from domain.project_mother import ProjectMother
 
@@ -37,3 +35,12 @@ def test_get_should_return_existing_project():
 
     assert found is not None
     assert found.project_id == project.project_id
+
+
+def test_get_all_should_return_all_project_existing_in_root_directory():
+    repository.save(project)
+
+    found = repository.get_all()
+
+    assert len(found) == 1
+    assert found[0].project_id == project.project_id

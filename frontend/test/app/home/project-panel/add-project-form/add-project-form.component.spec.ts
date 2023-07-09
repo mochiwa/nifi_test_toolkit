@@ -60,6 +60,7 @@ describe('AddProjectFormComponent', () => {
       tick()
 
       expect(component.backendService.addProject).toHaveBeenCalledWith({
+        project_id: undefined,
         project_name: "my project",
         project_uri: "http://localhost:8080",
         authentication: true,
