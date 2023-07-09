@@ -6,14 +6,15 @@ import {
 import {byRole, byText, byTextContent, createComponentFactory, Spectator} from "@ngneat/spectator";
 import {MatDialogRef} from "@angular/material/dialog";
 import {MatDialogMock} from "../../../../helper/mock/modalMock";
-import {BackendService} from "../../../../../src/app/core/service/BackendService";
-import {BackendServiceMock} from "../../../../helper/mock/BackendServiceMock";
-import {HttpMother} from "../../../../helper/mother/HttpMother";
-import {of, throwError} from "rxjs";
+import {MockStore, provideMockStore} from "@ngrx/store/testing";
+import {initialState} from "../../../../../src/app/shared/state/project.reducer";
+import {GlobalState} from "../../../../../src/app/shared/state/project.state";
+import {addProject} from "../../../../../src/app/shared/state/project.action";
 
 describe('AddProjectFormComponent', () => {
   let component: AddProjectFormComponent;
   let view: Spectator<AddProjectFormComponent>;
+  let store: MockStore<GlobalState>;
 
   const factory = createComponentFactory({
     component: AddProjectFormComponent,
@@ -21,16 +22,16 @@ describe('AddProjectFormComponent', () => {
       {
         provide: MatDialogRef,
         useClass: MatDialogMock
-      },
-      {
-        provide: BackendService,
-        useClass: BackendServiceMock
       }
+    ],
+    providers: [
+      provideMockStore({initialState}),
     ]
   })
   beforeEach(() => {
     view = factory()
     component = view.component
+    store = view.inject(MockStore)
   });
 
   it('should contains the [data-tst="add_project-form"]', () => {
@@ -54,30 +55,19 @@ describe('AddProjectFormComponent', () => {
     })
 
     it('should submit the form when click on submit button', fakeAsync(() => {
-      spyOn(component.backendService, "addProject").and.returnValue(of(HttpMother.default({})));
+      const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
       spyOn(component.dialogRef, "close");
       view.click(byText('Submit'));
       tick()
 
-      expect(component.backendService.addProject).toHaveBeenCalledWith({
-        project_id: undefined,
+      expect(dispatchSpy).toHaveBeenCalledWith(addProject({
         project_name: "my project",
         project_uri: "http://localhost:8080",
         authentication: true,
         username: "admin",
         password: "password"
-      });
+      }));
       expect(component.dialogRef.close).toHaveBeenCalled();
-    }));
-
-    it('should not close the form when backend raise error', fakeAsync(() => {
-      spyOn(component.dialogRef, 'close');
-      spyOn(component.backendService, "addProject").and.returnValue(throwError(() => HttpMother.error()))
-
-      view.click(byText('Submit'));
-
-      expect(view.query('[data-tst="add_project-form"]')).toBeTruthy();
-      expect(component.dialogRef.close).not.toHaveBeenCalled();
     }));
 
 

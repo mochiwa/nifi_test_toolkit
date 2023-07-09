@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
-import {BackendService} from "../../../core/service/BackendService";
 import {MatInputModule} from "@angular/material/input";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {HttpErrorResponse} from "@angular/common/http";
 import {NgIf} from "@angular/common";
 import {Project} from "../../../core/model/Project";
+import {Store} from "@ngrx/store";
+import {GlobalState} from "../../../shared/state/project.state";
+import {addProject} from "../../../shared/state/project.action";
 
 @Component({
   standalone: true,
@@ -34,7 +35,7 @@ export class AddProjectFormComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddProjectFormComponent>,
-    public backendService: BackendService) {
+    private store: Store<GlobalState>) {
   }
 
   ngOnInit(): void {
@@ -50,11 +51,8 @@ export class AddProjectFormComponent implements OnInit {
 
   submit() {
     let payload: Project = Object.assign(this.projectForm.value)
-    this.backendService.addProject(payload)
-      .subscribe({
-        next: () => this.cancel(),
-        error: (e: HttpErrorResponse) => console.error(e)
-      });
+    this.store.dispatch(addProject(payload))
+    this.dialogRef.close();
   }
 
   private toggleField(field: FormControl) {

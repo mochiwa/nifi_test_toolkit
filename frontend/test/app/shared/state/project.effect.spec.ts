@@ -6,7 +6,7 @@ import {provideMockActions} from "@ngrx/effects/testing";
 import {Observable, of} from "rxjs";
 import {MockStore, provideMockStore} from "@ngrx/store/testing";
 import {AppState} from "../../../../src/app/shared/state/project.state";
-import {fetchAllProjects, fetched} from "../../../../src/app/shared/state/project.action";
+import {addProject, fetchAllProjects, fetched} from "../../../../src/app/shared/state/project.action";
 import {ProjectMother} from "../../core/model/ProjectMother";
 import {HttpMother} from "../../../helper/mother/HttpMother";
 import {initialState} from "../../../../src/app/shared/state/project.reducer";
@@ -44,6 +44,19 @@ describe("State Project effect", () => {
         expect(res).toEqual(fetched({
           projects: projects
         }));
+        expect(spy).toHaveBeenCalled();
+        done();
+      });
+    });
+  });
+
+  describe("addProject", () => {
+    const httpResponse = HttpMother.default({code: 200});
+    it('should call backend#addProject', (done) => {
+      const spy = spyOn(backend, 'addProject').and.returnValue(of(httpResponse));
+      actions$ = of(addProject);
+      effects.addProject$.subscribe((res) => {
+        expect(res).toEqual(fetchAllProjects());
         expect(spy).toHaveBeenCalled();
         done();
       });
