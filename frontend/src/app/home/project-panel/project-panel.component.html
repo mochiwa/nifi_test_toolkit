@@ -6,4 +6,18 @@
       mat-button> +
     </button>
   </div>
+  <div [attr.data-tst]="'project_panel'">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let project of projects$ | async;"
+                           [id]="'project-panel-'+project.project_id"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{project.project_name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-divider/>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

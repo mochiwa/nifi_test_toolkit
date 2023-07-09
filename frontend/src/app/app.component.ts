@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ProjectPanelComponent} from "./home/project-panel/project-panel.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
   standalone: true,
@@ -7,8 +8,10 @@ import {ProjectPanelComponent} from "./home/project-panel/project-panel.componen
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   imports: [
-    ProjectPanelComponent
-  ]
+    ProjectPanelComponent,
+    CommonModule,
+  ],
+  providers: []
 })
 export class AppComponent {
 }

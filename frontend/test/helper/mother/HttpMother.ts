@@ -7,7 +7,8 @@ export class HttpMother {
     return new HttpResponse({
       headers: new HttpHeaders({
         code: code
-      })
+      }),
+      body: body
     });
   }
 

@@ -20,4 +20,10 @@ export class BackendService {
       observe: 'response'
     })
   }
+
+  public getAll(): Observable<HttpResponse<Project[]>> {
+    return this.http.get<[Project]>(`${this.url}/projects`, {
+      observe: 'response'
+    })
+  }
 }
