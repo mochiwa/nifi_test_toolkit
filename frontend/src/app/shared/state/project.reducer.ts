@@ -1,4 +1,4 @@
-import {fetchAllProjects, fetched} from "./project.action";
+import {fetchAllProjects, fetched,addProject} from "./project.action";
 import {createReducer, on} from "@ngrx/store";
 import {AppState} from "./project.state";
 

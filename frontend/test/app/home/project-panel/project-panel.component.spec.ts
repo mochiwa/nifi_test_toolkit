@@ -1,10 +1,8 @@
 import {ProjectPanelComponent} from '../../../../src/app/home/project-panel/project-panel.component';
 import {createComponentFactory, Spectator} from "@ngneat/spectator";
-import {MatDialog} from "@angular/material/dialog";
 import {
   AddProjectFormComponent
 } from "../../../../src/app/home/project-panel/add-project-form/add-project-form.component";
-import {MatDialogMock} from "../../../helper/mock/modalMock";
 import {ProjectMother} from "../../core/model/ProjectMother";
 import {MockStore, provideMockStore} from "@ngrx/store/testing";
 import {initialState} from "../../../../src/app/shared/state/project.reducer";
@@ -17,10 +15,6 @@ describe('ProjectPanelComponent', () => {
   let store: MockStore<GlobalState>;
   const factory = createComponentFactory({
     component: ProjectPanelComponent,
-    componentProviders: [{
-      provide: MatDialog,
-      useClass: MatDialogMock
-    }],
     providers: [
       provideMockStore({initialState}),
     ]

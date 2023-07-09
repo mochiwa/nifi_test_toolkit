@@ -18,7 +18,7 @@ describe("Project reducer", () => {
     expect(state.isLoading).toBeFalsy()
   });
 
-  it('fetched should set project from payload', () => {
+  it('fetched should set projects from payload', () => {
     const projects = ProjectMother.create();
     const action = fetched({projects: [projects]})
 

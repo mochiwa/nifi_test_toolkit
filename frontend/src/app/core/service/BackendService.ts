@@ -10,7 +10,6 @@ export class BackendService {
   private url = "http://localhost:8000"
   private header = new HttpHeaders({'Content-Type': 'application/json'})
 
-
   constructor(private http: HttpClient) {
   }
 

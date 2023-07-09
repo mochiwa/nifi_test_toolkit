@@ -1,5 +1,5 @@
-export interface Project {//todo: refactor
-  project_id: string | undefined,
+export interface Project {
+  project_id?: string | undefined,
   project_name: string,
   project_uri: string,
   authentication: boolean,
