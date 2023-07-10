@@ -8,4 +8,7 @@ export class BackendServiceMock {
   public getAll() {
     return new Observable()
   }
+  public deleteProject() {
+    return new Observable()
+  }
 }

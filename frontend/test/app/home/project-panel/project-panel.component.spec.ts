@@ -8,6 +8,8 @@ import {MockStore, provideMockStore} from "@ngrx/store/testing";
 import {initialState} from "../../../../src/app/shared/state/project.reducer";
 import {GlobalState} from "../../../../src/app/shared/state/project.state";
 import {fakeAsync} from "@angular/core/testing";
+import {projects} from "../../../../src/app/shared/state/project.selector";
+import {deleteProject} from "../../../../src/app/shared/state/project.action";
 
 describe('ProjectPanelComponent', () => {
   let component: ProjectPanelComponent;
@@ -50,4 +52,24 @@ describe('ProjectPanelComponent', () => {
     expect(view.query('[id="project-panel-123"]')).toBeTruthy()
     expect(dispatchSpy).toHaveBeenCalled()
   }));
+
+  describe("delete project",()=>{
+    const project = ProjectMother.create()
+    beforeEach(()=>{
+      store.setState({appState: {...initialState, projects: [project]}})
+      component.ngOnInit()
+      view.detectChanges()
+    })
+
+    it('should delete project when click on delete button of the the expansion panel', ()=> {
+      const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
+
+      view.click('[id="project-panel-123"] button')
+      store.setState({appState: {...initialState, projects: []}})
+      view.detectChanges()
+
+      expect(dispatchSpy).toHaveBeenCalledWith(deleteProject({project_id:'123'}))
+      expect(view.query('[id="project-panel-123"]')).toBeFalsy()
+    });
+  })
 });

@@ -6,7 +6,7 @@ import {provideMockActions} from "@ngrx/effects/testing";
 import {Observable, of} from "rxjs";
 import {MockStore, provideMockStore} from "@ngrx/store/testing";
 import {AppState} from "../../../../src/app/shared/state/project.state";
-import {addProject, fetchAllProjects, fetched} from "../../../../src/app/shared/state/project.action";
+import {addProject, deleteProject, fetchAllProjects, fetched} from "../../../../src/app/shared/state/project.action";
 import {ProjectMother} from "../../core/model/ProjectMother";
 import {HttpMother} from "../../../helper/mother/HttpMother";
 import {initialState} from "../../../../src/app/shared/state/project.reducer";
@@ -63,4 +63,16 @@ describe("State Project effect", () => {
     });
   });
 
+  describe("deleteProject", () => {
+    const httpResponse = HttpMother.default({code: 200});
+    it('should call backend#deleteProject', (done) => {
+      const spy = spyOn(backend, 'deleteProject').and.returnValue(of(httpResponse));
+      actions$ = of(deleteProject);
+      effects.deleteProject$.subscribe((res) => {
+        expect(res).toEqual(fetchAllProjects());
+        expect(spy).toHaveBeenCalled();
+        done();
+      });
+    });
+  });
 })

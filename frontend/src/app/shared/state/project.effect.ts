@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {BackendService} from "../../core/service/BackendService";
-import {addProject, fetchAllProjects, fetched} from "./project.action";
+import {addProject, deleteProject, fetchAllProjects, fetched} from "./project.action";
 import {map, mergeMap} from "rxjs";
 
 @Injectable({
@@ -23,8 +23,18 @@ export class ProjectEffect {
       ofType(addProject),
       mergeMap((project) => this.backendService.addProject(project).pipe(
           map((response)=> fetchAllProjects())
-          )
         )
+      )
+    )
+  );
+
+  deleteProject$ = createEffect(()=>
+    this.actions$.pipe(
+      ofType(deleteProject),
+      mergeMap((data) => this.backendService.deleteProject(data.project_id).pipe(
+          map((response)=> fetchAllProjects())
+        )
+      )
     )
   );
 

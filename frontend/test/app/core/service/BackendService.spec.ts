@@ -29,4 +29,18 @@ describe('BooksService', () => {
 
     req.flush(project);
   });
+
+  it('deleteProject should DELETE /projects/id and return empty body', () => {
+    const project = ProjectMother.create()
+    service.deleteProject("123").subscribe(value => {
+      console.log(value)
+    })
+
+    const req = httpController.expectOne({
+      method: 'DELETE',
+      url: `${url}/projects/123`,
+    });
+
+    req.flush(project);
+  });
 });
