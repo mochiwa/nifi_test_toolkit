@@ -25,4 +25,12 @@ export class BackendService {
       observe: 'response'
     })
   }
+
+  public deleteProject(project_id: string): Observable<HttpResponse<any>>  {
+    console.log(project_id)
+    return this.http.delete(`${this.url}/projects/${project_id}`,{
+      headers: this.header,
+      observe: 'response'
+    })
+  }
 }

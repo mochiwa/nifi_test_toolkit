@@ -6,7 +6,7 @@ import {Project} from "../../core/model/Project";
 import {Observable} from "rxjs";
 import {CommonModule} from "@angular/common";
 import {Store} from "@ngrx/store";
-import {fetchAllProjects} from "../../shared/state/project.action";
+import {deleteProject, fetchAllProjects} from "../../shared/state/project.action";
 import {projects} from "../../shared/state/project.selector";
 import {GlobalState} from "../../shared/state/project.state";
 import {AddProjectFormComponent} from "./add-project-form/add-project-form.component";
@@ -34,6 +34,10 @@ export class ProjectPanelComponent implements OnInit {
 
   openAddProjectForm() {
     this.addProjectForm.open(AddProjectFormComponent);
+  }
+
+  deleteProject(project : Project){
+    this.store.dispatch(deleteProject({project_id: project.project_id!}))
   }
 
   ngOnInit(): void {
